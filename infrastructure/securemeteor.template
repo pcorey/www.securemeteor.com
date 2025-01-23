@@ -1,0 +1,388 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "securemeteor.template",
+  "Resources": {
+    "s3Bucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Sub": "securemeteor-${AWS::AccountId}"
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": false,
+          "BlockPublicPolicy": false,
+          "IgnorePublicAcls": false,
+          "RestrictPublicBuckets": false
+        },
+        "WebsiteConfiguration": {
+          "IndexDocument": "index.html"
+        }
+      }
+    },
+    "s3BucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "s3Bucket"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "PublicReadGetObject",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": "arn:aws:s3:::${s3Bucket}/*"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "hostedZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "Properties": {
+        "Name": "securemeteor.com"
+      }
+    },
+    "certificate": {
+      "Type": "AWS::CertificateManager::Certificate",
+      "Properties": {
+        "DomainName": "securemeteor.com",
+        "ValidationMethod": "DNS",
+        "DomainValidationOptions": [
+          {
+            "DomainName": "securemeteor.com",
+            "HostedZoneId": {
+              "Ref": "hostedZone"
+            }
+          }
+        ],
+        "SubjectAlternativeNames": [
+          "www.securemeteor.com"
+        ]
+      }
+    },
+    "cloudfrontDistribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
+            "securemeteor.com",
+            "www.securemeteor.com"
+          ],
+          "DefaultCacheBehavior": {
+            "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+            "TargetOriginId": {
+              "Fn::Sub": "${s3Bucket}.s3-website.${AWS::Region}.amazonaws.com"
+            },
+            "ViewerProtocolPolicy": "redirect-to-https"
+          },
+          "Enabled": true,
+          "Origins": [
+            {
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "http-only"
+              },
+              "DomainName": {
+                "Fn::Sub": "${s3Bucket}.s3-website.${AWS::Region}.amazonaws.com"
+              },
+              "Id": {
+                "Fn::Sub": "${s3Bucket}.s3-website.${AWS::Region}.amazonaws.com"
+              }
+            }
+          ],
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Ref": "certificate"
+            },
+            "MinimumProtocolVersion": "TLSv1.2_2021",
+            "SslSupportMethod": "sni-only"
+          }
+        }
+      }
+    },
+    "recordSet": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "Name": "securemeteor.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "cloudfrontDistribution",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2"
+        },
+        "HostedZoneId": {
+          "Ref": "hostedZone"
+        }
+      }
+    },
+    "recordSetIpv6": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "Name": "securemeteor.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "cloudfrontDistribution",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2"
+        },
+        "HostedZoneId": {
+          "Ref": "hostedZone"
+        }
+      }
+    },
+    "recordSetWww": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "Name": "www.securemeteor.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "cloudfrontDistribution",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2"
+        },
+        "HostedZoneId": {
+          "Ref": "hostedZone"
+        }
+      }
+    },
+    "recordSetWwwIpv6": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "Name": "www.securemeteor.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "cloudfrontDistribution",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2"
+        },
+        "HostedZoneId": {
+          "Ref": "hostedZone"
+        }
+      }
+    },
+    "githubConnection": {
+      "Type": "AWS::CodeStarConnections::Connection",
+      "Properties": {
+        "ConnectionName": "pcorey",
+        "ProviderType": "GitHub"
+      }
+    },
+    "githubConnectionArn": {
+      "Type": "AWS::SSM::Parameter",
+      "Properties": {
+        "Name": "/securemeteor/github-connection-arn",
+        "Type": "String",
+        "Value": {
+          "Fn::GetAtt": [
+            "githubConnection",
+            "ConnectionArn"
+          ]
+        }
+      }
+    },
+    "artifactBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Fn::Sub": "securemeteor-${AWS::AccountId}-artifacts"
+        }
+      }
+    },
+    "artifactBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "artifactBucket"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "DenyUnEncryptedObjectUploads",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "s3:PutObject",
+              "Resource": {
+                "Fn::Sub": "${artifactBucket.Arn}/*"
+              },
+              "Condition": {
+                "StringNotEquals": {
+                  "s3:x-amz-server-side-encryption": "aws:kms"
+                }
+              }
+            },
+            {
+              "Sid": "DenyInsecureConnections",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "s3:*",
+              "Resource": {
+                "Fn::Sub": "${artifactBucket.Arn}/*"
+              },
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "pipelineRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "codepipeline.amazonaws.com"
+                ]
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "AllowRunCodePipeline",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "codestar-connections:*",
+                    "iam:PassRole",
+                    "logs:*",
+                    "s3:*",
+                    "ssm:*"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "codePipeline": {
+      "Type": "AWS::CodePipeline::Pipeline",
+      "Properties": {
+        "ArtifactStore": {
+          "Type": "S3",
+          "Location": {
+            "Ref": "artifactBucket"
+          }
+        },
+        "Name": "www.securemeteor.com",
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "pipelineRole",
+            "Arn"
+          ]
+        },
+        "Stages": [
+          {
+            "Name": "Source",
+            "Actions": [
+              {
+                "Name": "Source",
+                "ActionTypeId": {
+                  "Category": "Source",
+                  "Owner": "AWS",
+                  "Provider": "CodeStarSourceConnection",
+                  "Version": 1
+                },
+                "Configuration": {
+                  "BranchName": "main",
+                  "ConnectionArn": {
+                    "Fn::GetAtt": [
+                      "githubConnectionArn",
+                      "Value"
+                    ]
+                  },
+                  "FullRepositoryId": "pcorey/www.securemeteor.com"
+                },
+                "OutputArtifacts": [
+                  {
+                    "Name": "SourceOutput"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Deploy",
+            "Actions": [
+              {
+                "ActionTypeId": {
+                  "Category": "Deploy",
+                  "Owner": "AWS",
+                  "Provider": "S3",
+                  "Version": "1"
+                },
+                "Configuration": {
+                  "BucketName": {
+                    "Ref": "s3Bucket"
+                  },
+                  "Extract": true
+                },
+                "InputArtifacts": [
+                  {
+                    "Name": "SourceOutput"
+                  }
+                ],
+                "Name": "DeployToS3"
+              }
+            ]
+          }
+        ],
+        "Triggers": [
+          {
+            "GitConfiguration": {
+              "Push": [
+                {
+                  "Branches": {
+                    "Includes": [
+                      "main"
+                    ]
+                  }
+                }
+              ],
+              "SourceActionName": "Source"
+            },
+            "ProviderType": "CodeStarSourceConnection"
+          }
+        ]
+      }
+    }
+  }
+}
