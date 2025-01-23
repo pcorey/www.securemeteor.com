@@ -1,197 +1,489 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        
-            <title>Secure Meteor - Meteor Security Checklist</title>
-        
-        <meta name="viewport" content="width=device-width">
-        <meta name="description" content="Learn to how to secure your Meteor application from a Meteor security professional. This easy to understand and actionable guide will teach you the ins and outs of Meteor security.">
-        <meta name="robots" content="index,follow">
-        <meta name="google-site-verification" content="ut-g0UTIu8DWrEtUvWSXrVlCq1exF4YD54ANC-c9rsk" />
-        <link rel="icon" type="image/png" href="/img/favicon.png">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
-        <link rel="stylesheet" href="/css/pygments.css">
-        <link rel="stylesheet" href="https://use.typekit.net/ssa1tke.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <script
-            src="https://code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
-        <script src="/js/feather.min.js"></script>
-    </head>
-    <body>
-        <section class="checklist">
-            <div class="ui text container">
-    
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Secure Meteor - Meteor Security Checklist</title>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Learn to how to secure your Meteor application from a Meteor security professional. This easy to understand and actionable guide will teach you the ins and outs of Meteor security."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta
+      name="google-site-verification"
+      content="ut-g0UTIu8DWrEtUvWSXrVlCq1exF4YD54ANC-c9rsk"
+    />
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"
+    />
+    <link rel="stylesheet" href="/css/pygments.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/ssa1tke.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="/js/feather.min.js"></script>
+  </head>
+  <body>
+    <section class="checklist">
+      <div class="ui text container">
         <header>
-            <h1>Meteor Security Checklist</h1>
+          <h1>Meteor Security Checklist</h1>
         </header>
-    
 
-    <div class="invert" style="margin: 2em 0; padding: 2em 0;">
-  <div class="ui text container">
-    <p>Below you'll find a comprehensive Meteor security checklist that's intended to help you cover all the bases when it comes to securing your Meteor project. For a more in-depth guide to securing your application, be sure to read <a href="/">Secure Meteor</a>!</p>
-  </div>
-</div>
-
-<h2 id="dependencies">Dependencies</h2>
-
-<p class="todo-item"><i data-feather="check-square"></i> Use Package Scan to check for Meteor packages with known vulnerabilities.</p>
-
-<p>Your application code may be secure, but if you’re using a vulnerable Meteor package, your application is vulnerable.</p>
-
-<p><i data-feather="link"></i> <a href="https://github.com/East5th/package-scan">https://github.com/east5th/package-scan</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Use Snyk and/or NSP to check for Node.js packages with known vulnerabilities.</p>
-
-<p>Node.js dependencies lay the foundation for your Meteor application. Make sure that your foundation is sound.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/06/20/node-vulnerability-scanners-in-a-13-world/">http://www.petecorey.com/blog/2016/06/20/node-vulnerability-scanners-in-a-13-world/</a></p>
-
-<h2 id="methods-publications-and-server-side-routes">Methods, Publications, and Server-side Routes</h2>
-
-<p class="todo-item"><i data-feather="check-square"></i> Thoroughly check <em>all</em> method, publication, and route arguments.</p>
-
-<p>Using <code class="highlighter-rouge">check</code> to make assertions about the type and shape of user inputs can prevent entire families of NoSQL injection vulnerabilities. Never pass unchecked data into a query.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/03/21/nosql-injection-in-modern-web-applications/">http://www.petecorey.com/blog/2016/03/21/nosql-injection-in-modern-web-applications/</a></p>
-
-<p><i data-feather="link"></i> <a href="https://github.com/East5th/check-checker">https://github.com/East5th/check-checker</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Use trusted fields (like <code class="highlighter-rogue">this.userId</code>) whenever possible.</p>
-
-<p>Never use a user-provided field when a trusted alternative is available.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#user-id-client">https://guide.meteor.com/security.html#user-id-client</a></p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/05/05/meteor-security-in-the-wild/">http://www.petecorey.com/blog/2015/05/05/meteor-security-in-the-wild/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Verify that methods, publications, and server-side routes are making authentication and authorization checks.</p>
-
-<p>Always verify that the current user has permission to do the thing they’re trying to do. Similarly, never assume that an unauthorized user can’t call a method or publication because it wasn’t publicly defined.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/02/01/sending-emails-through-hidden-methods/">http://www.petecorey.com/blog/2016/02/01/sending-emails-through-hidden-methods/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Always be aware of where your code is running.</p>
-
-<p>In a Javascript-everywhere ecosystem, we can sometimes forget whether a specific piece of code runs of the client or the server.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/09/21/never-forget-where-your-code-runs/">http://www.petecorey.com/blog/2015/09/21/never-forget-where-your-code-runs/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Test that MongoDB queries are behaving as expected in all circumstances.</p>
-
-<p>Incorrectly written queries can lead to over-publishing and the leaking of data to the client.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/09/05/querying-non-existent-mongodb-fields/">http://www.petecorey.com/blog/2016/09/05/querying-non-existent-mongodb-fields/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Rate limit and unblock your methods and publications where appropriate.</p>
-
-<p>Take basic precautions against attackers potentially carrying out Denial of Services attacks through excessive method calls or subscriptions.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#rate-limiting">https://guide.meteor.com/security.html#rate-limiting</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Avoid allow &amp; deny collection validators.</p>
-
-<p>Allow and deny rules can be hard to reason about and even harder to implement correctly.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#allow-deny">https://guide.meteor.com/security.html#allow-deny</a></p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/06/15/allow-and-deny-challenge-check-yourself/">http://www.petecorey.com/blog/2015/06/15/allow-and-deny-challenge-check-yourself/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Always whitelist the fields of documents returned by methods and subscriptions.</p>
-
-<p>Whitelisting the fields returned by a query can prevent sensitive data being accidentally leaked to the client.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#fields">https://guide.meteor.com/security.html#fields</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Use reactive data sources to securely invalidate cursors returned by publications.</p>
-
-<p>Use reactive data sources like <code class="highlighter-rouge">this.userId</code>, or the <code class="highlighter-rouge">reactive-publish</code> package to continually ensure that a user is authorized to see the data being published.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#publications-user-id">https://guide.meteor.com/security.html#publications-user-id</a></p>
-
-<p><i data-feather="link"></i> <a href="https://github.com/peerlibrary/meteor-reactive-publish">https://github.com/peerlibrary/meteor-reactive-publish</a></p>
-
-<h2 id="front-end">Front-end</h2>
-
-<p class="todo-item"><i data-feather="check-square"></i> Limit and audit the use of raw HTML injection.</p>
-
-<p>Triple braces in Blaze, <code class="highlighter-rouge">dangerouslySetInnerHTML</code> in React, and jQuery’s <code class="highlighter-rouge">html</code> should be used sparingly. User-provided data being injected directly into the DOM must be thoroughly sanitized.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/04/03/black-box-meteor-triple-brace-xss/">http://www.petecorey.com/blog/2015/04/03/black-box-meteor-triple-brace-xss/</a></p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/09/07/hijacking-meteor-accounts-with-xss/">http://www.petecorey.com/blog/2015/09/07/hijacking-meteor-accounts-with-xss/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Check for other instances of cross-site scripting vulnerabilities.</p>
-
-<p>Third party packages and plugins can sometimes be vulnerable to cross-site scripting attacks. Make sure you’re sanitizing user-provided data before handing it off to any front-end library.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/03/14/stored-xss-and-unexpected-unsafe-eval/">http://www.petecorey.com/blog/2016/03/14/stored-xss-and-unexpected-unsafe-eval/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Tighten up your content security policy.</p>
-
-<p>Use the <code class="highlighter-rouge">browser-policy</code> Meteor package to add a Content Security Policy to your application. Fine tune the CSP to meet your application’s needs.</p>
-
-<h2 id="infrastructure">Infrastructure</h2>
-
-<p class="todo-item"><i data-feather="check-square"></i> Always use TLS/SSL.</p>
-
-<p>Use <code class="highlighter-rouge">force-ssl</code> or configure your load balancer/reverse proxy to always redirect clients to a secure connection.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#ssl">https://guide.meteor.com/security.html#ssl</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Consider rate limiting static asset and <code class="highlighter-rogue">/websocket</code> requests.</p>
-
-<p>Upfront work can mitigate the pain of Denial of Service attacks in the future.</p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/05/16/the-missing-link-in-meteors-rate-limiter/">http://www.petecorey.com/blog/2016/05/16/the-missing-link-in-meteors-rate-limiter/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Ensure no sensitive business secrets are being bundled with the client Javascript application.</p>
-
-<p>Malicious users can inspect the source code and extract your sensitive business secrets or processes.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#secret-code">https://guide.meteor.com/security.html#secret-code</a></p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/">http://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/</a></p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2016/02/15/method-auditing-revisited/">http://www.petecorey.com/blog/2016/02/15/method-auditing-revisited/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Never keep API tokens or other secrets directly in your source code.</p>
-
-<p>Secrets kept in code can mistakenly find their way to the client where they can be discovered and abused by malicious users.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#api-keys">https://guide.meteor.com/security.html#api-keys</a></p>
-
-<p><i data-feather="link"></i> <a href="http://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/">http://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/</a></p>
-
-<p class="todo-item"><i data-feather="check-square"></i> Don’t expose secrets through the <code class="highlighter-rogue">public</code> field of <code class="highlighter-rogue">Meteor.settings</code>.</p>
-
-<p>Secrets stored in <code class="highlighter-rouge">public</code> will be exposed to the client.</p>
-
-<p><i data-feather="link"></i> <a href="https://guide.meteor.com/security.html#client-settings">https://guide.meteor.com/security.html#client-settings</a></p>
-
-</div>
-
-        </section>
-        <footer>
-            <div class="ui text container">
-                <p>&copy; Pete Corey & East5th Inc.</p>
-            </div>
-        </footer>
-        <script>
-            feather.replace();
-        </script>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54297550-16"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-54297550-16');
-        </script>
-    </body>
+        <div class="invert" style="margin: 2em 0; padding: 2em 0">
+          <div class="ui text container">
+            <p>
+              Below you'll find a comprehensive Meteor security checklist that's
+              intended to help you cover all the bases when it comes to securing
+              your Meteor project. For a more in-depth guide to securing your
+              application, be sure to read <a href="/">Secure Meteor</a>!
+            </p>
+          </div>
+        </div>
+
+        <h2 id="dependencies">Dependencies</h2>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Use Package Scan to check for
+          Meteor packages with known vulnerabilities.
+        </p>
+
+        <p>
+          Your application code may be secure, but if you’re using a vulnerable
+          Meteor package, your application is vulnerable.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://github.com/East5th/package-scan"
+            >https://github.com/east5th/package-scan</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Use Snyk and/or NSP to check for
+          Node.js packages with known vulnerabilities.
+        </p>
+
+        <p>
+          Node.js dependencies lay the foundation for your Meteor application.
+          Make sure that your foundation is sound.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/06/20/node-vulnerability-scanners-in-a-13-world/"
+            >https://www.petecorey.com/blog/2016/06/20/node-vulnerability-scanners-in-a-13-world/</a
+          >
+        </p>
+
+        <h2 id="methods-publications-and-server-side-routes">
+          Methods, Publications, and Server-side Routes
+        </h2>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Thoroughly check
+          <em>all</em> method, publication, and route arguments.
+        </p>
+
+        <p>
+          Using <code class="highlighter-rouge">check</code> to make assertions
+          about the type and shape of user inputs can prevent entire families of
+          NoSQL injection vulnerabilities. Never pass unchecked data into a
+          query.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/03/21/nosql-injection-in-modern-web-applications/"
+            >https://www.petecorey.com/blog/2016/03/21/nosql-injection-in-modern-web-applications/</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://github.com/East5th/check-checker"
+            >https://github.com/East5th/check-checker</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Use trusted fields (like
+          <code class="highlighter-rogue">this.userId</code>) whenever possible.
+        </p>
+
+        <p>
+          Never use a user-provided field when a trusted alternative is
+          available.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#user-id-client"
+            >https://guide.meteor.com/security.html#user-id-client</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/05/05/meteor-security-in-the-wild/"
+            >https://www.petecorey.com/blog/2015/05/05/meteor-security-in-the-wild/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Verify that methods, publications,
+          and server-side routes are making authentication and authorization
+          checks.
+        </p>
+
+        <p>
+          Always verify that the current user has permission to do the thing
+          they’re trying to do. Similarly, never assume that an unauthorized
+          user can’t call a method or publication because it wasn’t publicly
+          defined.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/02/01/sending-emails-through-hidden-methods/"
+            >https://www.petecorey.com/blog/2016/02/01/sending-emails-through-hidden-methods/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Always be aware of where your code
+          is running.
+        </p>
+
+        <p>
+          In a Javascript-everywhere ecosystem, we can sometimes forget whether
+          a specific piece of code runs of the client or the server.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/09/21/never-forget-where-your-code-runs/"
+            >https://www.petecorey.com/blog/2015/09/21/never-forget-where-your-code-runs/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Test that MongoDB queries are
+          behaving as expected in all circumstances.
+        </p>
+
+        <p>
+          Incorrectly written queries can lead to over-publishing and the
+          leaking of data to the client.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/09/05/querying-non-existent-mongodb-fields/"
+            >https://www.petecorey.com/blog/2016/09/05/querying-non-existent-mongodb-fields/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Rate limit and unblock your
+          methods and publications where appropriate.
+        </p>
+
+        <p>
+          Take basic precautions against attackers potentially carrying out
+          Denial of Services attacks through excessive method calls or
+          subscriptions.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#rate-limiting"
+            >https://guide.meteor.com/security.html#rate-limiting</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Avoid allow &amp; deny collection
+          validators.
+        </p>
+
+        <p>
+          Allow and deny rules can be hard to reason about and even harder to
+          implement correctly.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#allow-deny"
+            >https://guide.meteor.com/security.html#allow-deny</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/06/15/allow-and-deny-challenge-check-yourself/"
+            >https://www.petecorey.com/blog/2015/06/15/allow-and-deny-challenge-check-yourself/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Always whitelist the fields of
+          documents returned by methods and subscriptions.
+        </p>
+
+        <p>
+          Whitelisting the fields returned by a query can prevent sensitive data
+          being accidentally leaked to the client.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#fields"
+            >https://guide.meteor.com/security.html#fields</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Use reactive data sources to
+          securely invalidate cursors returned by publications.
+        </p>
+
+        <p>
+          Use reactive data sources like
+          <code class="highlighter-rouge">this.userId</code>, or the
+          <code class="highlighter-rouge">reactive-publish</code> package to
+          continually ensure that a user is authorized to see the data being
+          published.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#publications-user-id"
+            >https://guide.meteor.com/security.html#publications-user-id</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://github.com/peerlibrary/meteor-reactive-publish"
+            >https://github.com/peerlibrary/meteor-reactive-publish</a
+          >
+        </p>
+
+        <h2 id="front-end">Front-end</h2>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Limit and audit the use of raw
+          HTML injection.
+        </p>
+
+        <p>
+          Triple braces in Blaze,
+          <code class="highlighter-rouge">dangerouslySetInnerHTML</code> in
+          React, and jQuery’s <code class="highlighter-rouge">html</code> should
+          be used sparingly. User-provided data being injected directly into the
+          DOM must be thoroughly sanitized.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/04/03/black-box-meteor-triple-brace-xss/"
+            >https://www.petecorey.com/blog/2015/04/03/black-box-meteor-triple-brace-xss/</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/09/07/hijacking-meteor-accounts-with-xss/"
+            >https://www.petecorey.com/blog/2015/09/07/hijacking-meteor-accounts-with-xss/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Check for other instances of
+          cross-site scripting vulnerabilities.
+        </p>
+
+        <p>
+          Third party packages and plugins can sometimes be vulnerable to
+          cross-site scripting attacks. Make sure you’re sanitizing
+          user-provided data before handing it off to any front-end library.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/03/14/stored-xss-and-unexpected-unsafe-eval/"
+            >https://www.petecorey.com/blog/2016/03/14/stored-xss-and-unexpected-unsafe-eval/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Tighten up your content security
+          policy.
+        </p>
+
+        <p>
+          Use the <code class="highlighter-rouge">browser-policy</code> Meteor
+          package to add a Content Security Policy to your application. Fine
+          tune the CSP to meet your application’s needs.
+        </p>
+
+        <h2 id="infrastructure">Infrastructure</h2>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Always use TLS/SSL.
+        </p>
+
+        <p>
+          Use <code class="highlighter-rouge">force-ssl</code> or configure your
+          load balancer/reverse proxy to always redirect clients to a secure
+          connection.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#ssl"
+            >https://guide.meteor.com/security.html#ssl</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Consider rate limiting static
+          asset and <code class="highlighter-rogue">/websocket</code> requests.
+        </p>
+
+        <p>
+          Upfront work can mitigate the pain of Denial of Service attacks in the
+          future.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/05/16/the-missing-link-in-meteors-rate-limiter/"
+            >https://www.petecorey.com/blog/2016/05/16/the-missing-link-in-meteors-rate-limiter/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Ensure no sensitive business
+          secrets are being bundled with the client Javascript application.
+        </p>
+
+        <p>
+          Malicious users can inspect the source code and extract your sensitive
+          business secrets or processes.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#secret-code"
+            >https://guide.meteor.com/security.html#secret-code</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/"
+            >https://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2016/02/15/method-auditing-revisited/"
+            >https://www.petecorey.com/blog/2016/02/15/method-auditing-revisited/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Never keep API tokens or other
+          secrets directly in your source code.
+        </p>
+
+        <p>
+          Secrets kept in code can mistakenly find their way to the client where
+          they can be discovered and abused by malicious users.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#api-keys"
+            >https://guide.meteor.com/security.html#api-keys</a
+          >
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a
+            href="https://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/"
+            >https://www.petecorey.com/blog/2015/04/15/black-box-meteor-method-auditing/</a
+          >
+        </p>
+
+        <p class="todo-item">
+          <i data-feather="check-square"></i> Don’t expose secrets through the
+          <code class="highlighter-rogue">public</code> field of
+          <code class="highlighter-rogue">Meteor.settings</code>.
+        </p>
+
+        <p>
+          Secrets stored in <code class="highlighter-rouge">public</code> will
+          be exposed to the client.
+        </p>
+
+        <p>
+          <i data-feather="link"></i>
+          <a href="https://guide.meteor.com/security.html#client-settings"
+            >https://guide.meteor.com/security.html#client-settings</a
+          >
+        </p>
+      </div>
+    </section>
+    <footer>
+      <div class="ui text container">
+        <p>&copy; Pete Corey & East5th Inc.</p>
+      </div>
+    </footer>
+    <script>
+      feather.replace();
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-54297550-16"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-54297550-16");
+    </script>
+  </body>
 </html>
