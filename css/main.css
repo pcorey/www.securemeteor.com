@@ -1,0 +1,233 @@
+html {
+    height: auto;
+    font-size: 20px !important;
+}
+
+body {
+    height: auto;
+    background: linear-gradient(to right, #f8f8f8 0%, white 50%, #f8f8f8 100%);
+}
+
+p {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.landing p {
+    text-align: justify;
+}
+
+.hero p {
+    text-align: left;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+footer {
+    text-align: center;
+    font-size: 1em;
+    color: #ddd;
+    margin-bottom: 1em;
+}
+
+footer p {
+    text-align: center;
+}
+
+* {
+    font-family: "freight-sans-pro",sans-serif !important;
+    /* font-family: "proxima-nova",sans-serif !important; */
+    /* font-family: "lato",sans-serif !important; */
+}
+
+body > section {
+    margin-bottom: 8em;
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 16px !important;
+    }
+}
+
+a {
+    /* color: #ff008d !important; */
+    color: #ff0055 !important;
+    /* color: #478ce5 !important; */
+    /* text-decoration: underline dashed #ff008d !important; */
+}
+
+hr {
+    border: 0;
+    border-bottom: 4px solid #eee;
+    margin: 3em auto;
+    width: 75%;
+}
+
+.ui.text.container {
+    max-width: 800px !important;
+}
+
+body > header .ui.secondary.pointing.menu {
+    border: 0;
+}
+
+body > header .ui.secondary.pointing.menu .item:last-of-type {
+    /* padding-right: 0 !important; */
+}
+
+header {
+    margin: 4em 0 2em;
+}
+
+body > header a {
+    font-size: 1em;
+    font-weight: bold !important;
+}
+
+body > header .logo {
+    padding-left: 0 !important;
+}
+
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.hero h1 {
+    font-size: 5rem;
+}
+
+.hero p {
+    color: #FF0055;
+    font-size: 1.5rem;
+}
+
+.hero .arrow {
+    position: absolute;
+    text-align: center;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+}
+
+.hero .arrow .feather {
+    width: 3em;
+    height: 3em;
+    stroke: #eee;
+}
+
+.feather {
+    height: 1em;
+    vertical-align: middle;
+    margin-bottom: 6px;
+    margin-right: 6px;
+}
+
+ul {
+    list-style: disc;
+    color: #ccc;
+}
+
+li span {
+    color: #999;
+}
+
+code {
+    font-family: 'Source Code Pro', monospace !important;
+}
+
+.checklist p {
+    margin: 0 0;
+}
+
+.checklist .todo-item {
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.invert {
+    margin: 5em 0;
+    padding: 5em 0;
+    /* border-top: 4px solid #f8f8f8; */
+    /* border-bottom: 4px solid #f8f8f8; */
+    background-color: #f8f8f8;
+    /* background-color: rgba(0,0,0,.87); */
+    /* color: white; */
+}
+
+.landing .form {
+    margin: 2em 0;
+}
+
+.landing .form .button {
+    width: 100%;
+}
+
+.landing .form .button,
+.landing .form .button:hover,
+.landing .form .button:focus,
+.landing .form .button:active {
+    background-color: #ff0055;
+}
+
+#table-of-contents {
+    margin: 2em 0;
+}
+
+.price {
+    font-size: 4em;
+    font-family: "freight-sans-pro"!important;
+    font-weight: bold;
+    color: #ff0055;
+    line-height: 1;
+    margin-bottom:0.32em;
+}
+
+.dollar {
+    font-size: 0.5em;
+    font-family: 'source-code-pro'!important;
+    vertical-align: middle;
+}
+
+.buy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    margin: 0 0 2em;
+}
+
+.buy-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.buy-row > p {
+    flex: 1
+}
+
+.buy-row > .buy {
+}
+
+#faq ul li {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.question {
+    font-weight: bold;
+    margin: 2em 0;
+}
+.question strong {
+    font-weight: normal;
+}
+.answer {
+    padding-left: 2em;
+}

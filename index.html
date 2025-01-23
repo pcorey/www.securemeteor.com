@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+            <title>Secure Meteor</title>
+        
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="Learn to how to secure your Meteor application from a Meteor security professional. This easy to understand and actionable guide will teach you the ins and outs of Meteor security.">
+        <meta name="robots" content="index,follow">
+        <meta name="google-site-verification" content="ut-g0UTIu8DWrEtUvWSXrVlCq1exF4YD54ANC-c9rsk" />
+        <link rel="icon" type="image/png" href="/img/favicon.png">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+        <link rel="stylesheet" href="/css/pygments.css">
+        <link rel="stylesheet" href="https://use.typekit.net/ssa1tke.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+        <!-- <script src="/js/feather.min.js"></script> -->
+        <script src="https://unpkg.com/feather-icons"></script>
+    </head>
+    <body>
+        <section class="landing">
+            <div class="ui text container tk-freight-sans-pro">
+<div class="hero">
+  <h1>Secure Meteor</h1>
+  <p>Learn the ins and outs of Meteor application security from a Meteor security professional.</p>
+  <div class="arrow">
+    <i data-feather="arrow-down"></i> 
+  </div>
+</div>
+
+</div>
+<div class="invert" style="margin-top: 0;">
+  <div class="ui text container">
+    <p>I'm <a href="http://www.petecorey.com/">Pete Corey</a>, and for the last three years I’ve been <a href="http://www.petecorey.com/blog/tags/#security">writing</a> and <a href="http://www.petecorey.com/blog/2016/03/21/nosql-injection-in-modern-web-applications/">speaking</a> about Meteor security, <a href="http://www.petecorey.com/our-work/">developing and deploying</a> secure Meteor applications, working with amazing teams to <a href="http://www.petecorey.com/blog/2016/05/30/anatomy-of-an-assessment/">better secure their applications</a>, and building <a href="https://github.com/East5th/check-checker">security</a>-<a href="https://github.com/East5th/package-scan">focused</a> packages and <a href="http://www.injectdetect.com/">tools</a> for the Meteor ecosystem.</p>
+    <p>Secure Meteor is a an effort to capture and distill everything I’ve learned about Meteor security from my years of real-world Meteor security experience.</p>
+  </div>
+</div>
+
+<div class="ui text container" id="table-of-contents">
+<h2>What's in the book?</h2>
+<p>Secure Meteor puts you in the shoes of both a Meteor developer building out an e-commerce application with our favorite framework, and a malicious user trying to find and exploit vulnerabilities in that application for fun and profit.</p>
+<p>Securing your application is more than following a prescriptive list of dos and don’ts. Being able to build secure Meteor applications requires a mindset that deeply and intuitively understands potential attacks before they happen. <strong>My ultimate goal with this guide is to help you see your application through this mindset.</strong></p>
+<p>As you can see from its table of contents below, Secure Meteor attempts to cover the entire attack surface of your Meteor application, from the front-end to the back. Read through the provided sample chapters for a taste of what's inside!</p>
+<ul>
+<li><a href="/sample/about-this-book">About This Book</a></li>
+<li><a href="/sample/why-security">Why Security?</a></li>
+<li><span>Why Now?</span></li>
+<li><a href="/sample/how-is-this-book-organized">How Is This Book Organized?</a></li>
+<li><span>Insecure Defaults</span><ul>
+<li><span>Insecure and Autopublish</span></li>
+<li><span>Writes to Profile</span></li>
+</ul></li>
+<li><span>Authentication and Authorization</span><ul>
+<li><span>Missing User Checks</span></li>
+<li><span>Always Use Trusted Fields</span></li>
+</ul></li>
+<li><a href="/sample/checking-arguments">Checking Arguments</a><ul>
+<li><span>Partial Checks</span></li>
+<li><span>Always Check Your Arguments</span></li>
+</ul></li>
+<li><a href="/sample/nosql-injection">NoSQL Injection</a><ul>
+<li><span>NoSQL Injection Across Query Types</span><ul>
+<li><span>Remove Queries</span></li>
+<li><span>Single Update Queries</span></li>
+<li><span>Multi-Update Queries</span></li>
+<li><span>Find Queries</span></li>
+<li><span>Find-One Queries</span></li>
+<li><span>Insert Queries</span></li>
+<li><span>Upsert Queries</span></li>
+</ul></li>
+<li><span>Advanced NoSQL Injection</span><ul>
+<li><span>Incrementing Your Way to Admin Rights</span></li>
+<li><a href="/sample/renaming-your-way-to-admin-rights">Renaming Your Way to Admin Rights</a></li>
+<li><span>Hanging Your Database with a Query</span></li>
+</ul></li>
+</ul></li>
+<li><span>Securing Publications</span><ul>
+<li><span>Improperly Invalidated Publications</span></li>
+<li><span>NoSQL Injection in Publications</span></li>
+</ul></li>
+<li><span>Securing Endpoints</span><ul>
+<li><a href="/sample/the-danger-of-uncaught-exceptions">The Danger of Uncaught Exceptions</a></li>
+<li><span>Exposed Web Hook Endpoints</span></li>
+<li><span>Endpoint Authentication</span><ul>
+<li><span>Authenticating with HMACs</span></li>
+<li><span>Autehnticating with Meteor Tokens</span></li>
+</ul></li>
+</ul></li>
+<li><span>Securing Collection Validators</span><ul>
+<li><span>Writing Comprehensive Allow Rules is Hard</span></li>
+<li><span>NoSQL Injection Through Modifiers</span></li>
+<li><span>Multiple Allows and Denies</span></li>
+<li><span>Collection Validators and Server-side Operations</span></li>
+</ul></li>
+<li><span>Always Remember Where Your Code Runs</span><ul>
+<li><span>Sleuthing for Leaking Secrets</span></li>
+<li><span>Exploiting User Creation Options</span></li>
+</ul></li>
+<li><span>Securing the Client</span><ul>
+<li><span>The Dangers of Cross Site Scripting</span></li>
+<li><span>Cross Site Scripting through Third Party Libraries</span></li>
+<li><span>On Cross Site Request Forgery</span></li>
+</ul></li>
+<li><span>Dependencies</span><ul>
+<li><span>A Vulnerable Meteor Package</span></li>
+<li><span>A Vulnerable Node Package</span></li>
+</ul></li>
+<li><span>First Encounter</span><ul>
+<li><a href="/sample/finding-methods">Finding Methods</a></li>
+<li><span>A Note on “Validated Methods”</span></li>
+<li><span>Finding Collection Validators</span></li>
+<li><span>Finding Publications</span></li>
+<li><span>Finding Exposed Secrets</span></li>
+<li><span>Finding Dependencies</span></li>
+</ul></li>
+<li><span>Limit Your Assumptions</span></li>
+</ul>
+</div>
+
+<div class="invert" id="buy">
+<div class="ui text container">
+
+
+<div class="buy-row">
+<h2>Ready to get your copy?</h2>
+<p>Secure Meteor is a one hundred nine page PDF filled to the brim with the entirety of my knowledge on securing Meteor applications. <strong>I want to give you everything I know about securing Meteor applications for the cost of a large pizza!</strong></p>
+<div class="buy">
+  <span class="price"><span class="dollar">$</span>25</span>
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+  <a class="gumroad-button" href="https://gum.co/securemeteor" target="_blank">Buy Secure Meteor!</a>
+</div>
+</div>
+
+
+<p>I deeply believe that Secure Meteor, and the mindset that it helps foster, will be an invaluable asset on your Meteor journey. I couldn't be more excited to get this valuable resource into your hands.</p>
+
+</div>
+</div>
+
+<div class="ui text container" id="faq">
+
+<h2>Have More Questions?</h2>
+
+<p>Pulling the trigger on a purchase is always a difficult step to take. If you're still on the fence about purchasing Secure Meteor, I highly recommend reading the <a href="/sample/why-security">Why Security?</a> sample chapter and skimming through these frequently asked questions:</p>
+
+<p class="question"> <i data-feather="link"></i> Is Secure Meteor affiliated with the Meteor framework or MDG?
+<strong>No. Secure Meteor is an entirely independent project.</strong></p>
+
+<p class="question"> <i data-feather="book"></i> Is Secure Meteor a physical book?
+<strong>No. Secure Meteor is being sold exclusively as a PDF document.</strong></p>
+
+<p class="question"> <i data-feather="dollar-sign"></i> What if I don't find Secure Meteor valuable? <strong>If you regret your purchase of Secure Meteor for any reason, I'll happily issue a full refund.</strong></p>
+
+</div>
+
+
+        </section>
+        <footer>
+            <div class="ui text container">
+                <p>&copy; <a href="http://www.petecorey.com/">Pete Corey</a> & East5th Inc.</p>
+            </div>
+        </footer>
+        <script>
+            feather.replace();
+        </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54297550-16"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-54297550-16');
+        </script>
+    </body>
+</html>
